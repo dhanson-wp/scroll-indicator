@@ -1,0 +1,118 @@
+.wp-block-scroll-indicator-scroll-indicator {
+	.scroll-indicator {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+		padding: 20px;
+		cursor: pointer;
+
+		svg {
+			width: var(--scroll-indicator-size, 24px);
+			height: var(--scroll-indicator-size, 24px);
+		}
+	}
+
+	.scroll-text {
+		font-size: 14px;
+		color: currentColor;
+		font-weight: 500;
+		opacity: 0.8;
+	}
+}
+
+// Animations — only when user hasn't requested reduced motion
+@media (prefers-reduced-motion: no-preference) {
+	.wp-block-scroll-indicator-scroll-indicator {
+		// Mouse: bounce the whole icon, animate the scroll wheel line
+		.icon-mouse svg {
+			animation: scroll-indicator-bounce 2s infinite;
+		}
+
+		.icon-mouse .scroll-wheel {
+			animation: scroll-indicator-wheel 2s infinite;
+		}
+
+		// Chevron: bounce
+		.icon-chevron-bounce svg {
+			animation: scroll-indicator-bounce 2s infinite;
+		}
+
+		// Arrow-down: opacity pulse on the faded path
+		.icon-arrow-down svg path:last-child {
+			animation: scroll-indicator-fade-pulse 2s ease-in-out infinite;
+		}
+
+		// Scroll-dots: staggered opacity pulse
+		.icon-scroll-dots .dot-1 {
+			animation: scroll-indicator-dot-pulse 1.4s ease-in-out infinite 0s;
+		}
+
+		.icon-scroll-dots .dot-2 {
+			animation: scroll-indicator-dot-pulse 1.4s ease-in-out infinite 0.2s;
+		}
+
+		.icon-scroll-dots .dot-3 {
+			animation: scroll-indicator-dot-pulse 1.4s ease-in-out infinite 0.4s;
+		}
+
+		// Hand: bounce
+		.icon-hand-point svg {
+			animation: scroll-indicator-bounce 2s infinite;
+		}
+	}
+
+	@keyframes scroll-indicator-bounce {
+		0%,
+		20%,
+		50%,
+		80%,
+		100% {
+			transform: translateY(0);
+		}
+
+		40% {
+			transform: translateY(-8px);
+		}
+
+		60% {
+			transform: translateY(-4px);
+		}
+	}
+
+	@keyframes scroll-indicator-wheel {
+		0%,
+		50%,
+		100% {
+			transform: translateY(0);
+			opacity: 1;
+		}
+
+		25% {
+			transform: translateY(8px);
+			opacity: 0.5;
+		}
+	}
+
+	@keyframes scroll-indicator-fade-pulse {
+		0%,
+		100% {
+			opacity: 0.4;
+		}
+
+		50% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes scroll-indicator-dot-pulse {
+		0%,
+		100% {
+			opacity: 0.2;
+		}
+
+		50% {
+			opacity: 1;
+		}
+	}
+}
