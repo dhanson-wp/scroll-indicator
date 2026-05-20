@@ -6,16 +6,10 @@ import {
 	TextControl,
 	ButtonGroup,
 	Button,
-	__experimentalUnitControl as UnitControl,
 } from '@wordpress/components';
 
 import './editor.scss';
-import {
-	ICON_COMPONENTS,
-	IconRenderer,
-	getSizeValue,
-	SIZE_MAP,
-} from './icons';
+import { ICON_COMPONENTS, IconRenderer, getSizeValue } from './icons';
 
 const ICON_OPTIONS = [
 	{ value: 'mouse', label: __( 'Mouse', 'scroll-indicator' ) },
@@ -67,9 +61,7 @@ export default function Edit( { attributes, setAttributes } ) {
 									<Button
 										key={ option.value }
 										className="scroll-indicator-icon-button"
-										isPressed={
-											iconType === option.value
-										}
+										isPressed={ iconType === option.value }
 										onClick={ () =>
 											setAttributes( {
 												iconType: option.value,
@@ -85,9 +77,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						</ButtonGroup>
 					</fieldset>
 					<fieldset className="scroll-indicator-size-picker">
-						<legend>
-							{ __( 'Size', 'scroll-indicator' ) }
-						</legend>
+						<legend>{ __( 'Size', 'scroll-indicator' ) }</legend>
 						<ButtonGroup className="scroll-indicator-size-buttons">
 							{ SIZE_OPTIONS.map( ( size ) => (
 								<Button
@@ -104,7 +94,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							) ) }
 						</ButtonGroup>
 						{ iconSize === 'custom' && (
-							<UnitControl
+							<TextControl
 								label={ __(
 									'Custom Size',
 									'scroll-indicator'
@@ -115,24 +105,10 @@ export default function Edit( { attributes, setAttributes } ) {
 										customSizeValue: value,
 									} )
 								}
-								units={ [
-									{
-										value: 'px',
-										label: 'px',
-										default: 24,
-									},
-									{
-										value: 'em',
-										label: 'em',
-										default: 1.5,
-									},
-									{
-										value: 'rem',
-										label: 'rem',
-										default: 1.5,
-									},
-								] }
-								min={ 0 }
+								help={ __(
+									'Use a CSS size such as 24px, 2rem, or 3em.',
+									'scroll-indicator'
+								) }
 							/>
 						) }
 					</fieldset>
@@ -150,10 +126,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 					{ showText && (
 						<TextControl
-							label={ __(
-								'Custom Text',
-								'scroll-indicator'
-							) }
+							label={ __( 'Custom Text', 'scroll-indicator' ) }
 							value={ customText }
 							onChange={ ( value ) =>
 								setAttributes( { customText: value } )
