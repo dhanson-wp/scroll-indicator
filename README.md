@@ -2,9 +2,9 @@
 
 # Scroll Indicator
 
-Scroll Indicator is a lightweight WordPress block for adding a polished “keep scrolling” cue to landing pages, editorial layouts, hero sections, and long-form content.
+Scroll Indicator is a lightweight WordPress block for adding a “keep scrolling” cue to landing pages, editorial layouts, hero sections, and long-form content.
 
-It gives site builders a small, expressive block that feels designed: choose an icon style, tune the size and color, add optional text, and let visitors click or keyboard-activate the indicator to move one viewport down the page.
+Site builders can choose an icon style, tune the size and color, add optional text, and let visitors click or keyboard-activate the indicator to move one viewport down the page.
 
 ## Highlights
 
@@ -44,10 +44,17 @@ Create a production build:
 npm run build
 ```
 
-Create a distributable plugin ZIP:
+Create a local plugin ZIP:
 
 ```bash
 npm run plugin-zip
+```
+
+PressShip is the preferred WordPress.org submission path for this repo:
+
+```bash
+npx pressship pack .
+npx pressship publish . --dry-run
 ```
 
 ## Quality Checks
@@ -69,6 +76,8 @@ The `assets/` directory contains WordPress.org plugin directory artwork:
 - `icon-128x128.png`
 
 These are intended for the WordPress.org SVN `assets` directory after the plugin is approved. They are not required inside the installable plugin ZIP.
+
+The compiled block files live in `compiled/` so PressShip includes them in the installable ZIP by default.
 
 ## License
 

@@ -4,15 +4,15 @@
     "description": "An animated scroll indicator with multiple icon styles that encourages users to scroll down the page.",
     "author": "Derek Hanson",
     "license": "GPL-2.0-or-later",
-    "main": "build/index.js",
+    "main": "compiled/index.js",
     "scripts": {
-        "build": "wp-scripts build --webpack-copy-php",
+        "build": "wp-scripts build --webpack-copy-php --output-path=compiled",
         "format": "wp-scripts format",
-        "lint:css": "wp-scripts lint-style",
-        "lint:js": "wp-scripts lint-js",
+        "lint:css": "wp-scripts lint-style \"src/**/*.scss\"",
+        "lint:js": "wp-scripts lint-js \"src/**/*.js\"",
         "packages-update": "wp-scripts packages-update",
-        "plugin-zip": "wp-scripts plugin-zip",
-        "start": "wp-scripts start --blocks-manifest"
+        "plugin-zip": "npx pressship pack . --no-validate",
+        "start": "wp-scripts start --blocks-manifest --output-path=compiled"
     },
     "devDependencies": {
         "@wordpress/scripts": "^30.15.0"

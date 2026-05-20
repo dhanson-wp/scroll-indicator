@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'scroll_indicator_init' ) ) {
 	function scroll_indicator_init() {
-		register_block_type( __DIR__ . '/build/' );
+		register_block_type( __DIR__ . '/compiled/' );
 	}
 }
 add_action( 'init', 'scroll_indicator_init' );

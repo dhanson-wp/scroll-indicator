@@ -6,7 +6,17 @@
 		align-items: center;
 		gap: 10px;
 		padding: 20px;
+		border: 0;
+		background: transparent;
+		color: inherit;
 		cursor: pointer;
+		font: inherit;
+		text-align: center;
+
+		&:focus-visible {
+			outline: 2px solid currentcolor;
+			outline-offset: 4px;
+		}
 
 		svg {
 			width: var(--scroll-indicator-size, 24px);

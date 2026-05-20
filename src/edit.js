@@ -9,7 +9,12 @@ import {
 } from '@wordpress/components';
 
 import './editor.scss';
-import { ICON_COMPONENTS, IconRenderer, getSizeValue } from './icons';
+import {
+	ICON_COMPONENTS,
+	IconRenderer,
+	getIconType,
+	getSizeValue,
+} from './icons';
 
 const ICON_OPTIONS = [
 	{ value: 'mouse', label: __( 'Mouse', 'scroll-indicator' ) },
@@ -34,6 +39,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		customText = 'Scroll down',
 	} = attributes;
 
+	const normalizedIconType = getIconType( iconType );
 	const sizeValue = getSizeValue( iconSize, customSizeValue );
 
 	const blockProps = useBlockProps( {
@@ -159,8 +165,10 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			<div { ...blockProps }>
-				<div className={ `scroll-indicator icon-${ iconType }` }>
-					<IconRenderer iconType={ iconType } />
+				<div
+					className={ `scroll-indicator icon-${ normalizedIconType }` }
+				>
+					<IconRenderer iconType={ normalizedIconType } />
 					{ showText && (
 						<div className="scroll-text">
 							{ customText ||

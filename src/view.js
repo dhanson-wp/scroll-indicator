@@ -5,12 +5,17 @@ document.addEventListener( 'DOMContentLoaded', function () {
 		return;
 	}
 
+	const prefersReducedMotion = window.matchMedia(
+		'(prefers-reduced-motion: reduce)'
+	);
+
 	scrollIndicators.forEach( function ( indicator ) {
 		const hideAfterScrolling =
 			indicator.getAttribute( 'data-hide-after-scrolling' ) === 'true';
 		const blockElement = indicator.closest(
 			'.wp-block-scroll-indicator-scroll-indicator'
 		);
+		const originalTabIndex = indicator.getAttribute( 'tabindex' );
 
 		function scrollOneViewport() {
 			const windowHeight = window.innerHeight;
@@ -18,20 +23,11 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 			window.scrollTo( {
 				top: targetY,
-				behavior: 'smooth',
+				behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
 			} );
 		}
 
 		indicator.addEventListener( 'click', scrollOneViewport );
-
-		indicator.addEventListener( 'keydown', function ( event ) {
-			if ( event.key !== 'Enter' && event.key !== ' ' ) {
-				return;
-			}
-
-			event.preventDefault();
-			scrollOneViewport();
-		} );
 
 		indicator.style.cursor = 'pointer';
 
@@ -44,7 +40,36 @@ document.addEventListener( 'DOMContentLoaded', function () {
 				blockBottom = blockTop + blockElement.offsetHeight;
 			}
 
-			window.addEventListener( 'resize', updateBlockPosition );
+			function setIndicatorVisibility( isVisible ) {
+				indicator.style.transition = isVisible
+					? 'opacity 0.3s ease-in'
+					: 'opacity 0.3s ease-out';
+				indicator.style.opacity = isVisible ? '1' : '0';
+				indicator.style.visibility = isVisible ? 'visible' : 'hidden';
+				indicator.style.pointerEvents = isVisible ? 'auto' : 'none';
+
+				if ( isVisible ) {
+					indicator.removeAttribute( 'aria-hidden' );
+
+					if ( originalTabIndex === null ) {
+						indicator.removeAttribute( 'tabindex' );
+					} else {
+						indicator.setAttribute( 'tabindex', originalTabIndex );
+					}
+				} else {
+					indicator.setAttribute( 'aria-hidden', 'true' );
+					indicator.setAttribute( 'tabindex', '-1' );
+
+					if ( indicator.ownerDocument.activeElement === indicator ) {
+						indicator.blur();
+					}
+				}
+			}
+
+			window.addEventListener( 'resize', function () {
+				updateBlockPosition();
+				handleScroll();
+			} );
 
 			function handleScroll() {
 				const scrollTop = window.scrollY;
@@ -55,11 +80,9 @@ document.addEventListener( 'DOMContentLoaded', function () {
 					scrollTop <= blockTop ||
 					( blockTop < viewportBottom && blockBottom > scrollTop )
 				) {
-					indicator.style.transition = 'opacity 0.3s ease-in';
-					indicator.style.opacity = '1';
+					setIndicatorVisibility( true );
 				} else {
-					indicator.style.transition = 'opacity 0.3s ease-out';
-					indicator.style.opacity = '0';
+					setIndicatorVisibility( false );
 				}
 			}
 

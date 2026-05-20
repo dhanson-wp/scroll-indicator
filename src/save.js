@@ -1,5 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import { IconRenderer, getSizeValue } from './icons';
+import { IconRenderer, getIconType, getSizeValue } from './icons';
 
 export default function save( { attributes } ) {
 	const {
@@ -11,7 +11,9 @@ export default function save( { attributes } ) {
 		customText = 'Scroll down',
 	} = attributes;
 
+	const normalizedIconType = getIconType( iconType );
 	const sizeValue = getSizeValue( iconSize, customSizeValue );
+	const label = customText || 'Scroll down';
 
 	const blockProps = useBlockProps.save( {
 		style: {
@@ -21,22 +23,17 @@ export default function save( { attributes } ) {
 
 	return (
 		<div { ...blockProps }>
-			<div
-				className={ `scroll-indicator icon-${ iconType }` }
-				role="button"
-				tabIndex="0"
-				aria-label={ customText || 'Scroll down' }
+			<button
+				type="button"
+				className={ `scroll-indicator icon-${ normalizedIconType }` }
+				aria-label={ label }
 				data-hide-after-scrolling={
 					hideAfterScrolling ? 'true' : 'false'
 				}
 			>
-				<IconRenderer iconType={ iconType } />
-				{ showText && (
-					<div className="scroll-text">
-						{ customText || 'Scroll down' }
-					</div>
-				) }
-			</div>
+				<IconRenderer iconType={ normalizedIconType } />
+				{ showText && <div className="scroll-text">{ label }</div> }
+			</button>
 		</div>
 	);
 }

@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add a polished, animated scroll indicator block that encourages visitors to keep moving through your page.
+Add an animated scroll indicator block that encourages visitors to keep moving through your page.
 
 == Description ==
 
-Scroll Indicator adds a small, expressive Gutenberg block for landing pages, hero sections, editorial layouts, and long-form content. It gives visitors a clear visual cue that there is more to explore below the fold.
+Scroll Indicator adds a focused block for landing pages, hero sections, editorial layouts, and long-form content. It gives visitors a clear visual cue that there is more to explore below the fold.
 
 Choose from multiple icon styles, adjust the size, use native WordPress text color controls, add optional helper text, and let visitors click or keyboard-activate the indicator to move smoothly down the page.
 
@@ -28,6 +28,10 @@ The block is intentionally lightweight. Animations are handled with CSS, respect
 * Optional hide-after-scrolling behavior.
 * Keyboard-accessible click-to-scroll interaction.
 * No animation libraries or heavy runtime dependencies.
+
+= Development =
+
+Source code and build tooling are maintained at https://github.com/dhanson-wp/scroll-indicator.
 
 = Good For =
 
