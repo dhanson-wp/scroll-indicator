@@ -5,7 +5,7 @@
 	"version": "1.0.0",
 	"title": "Scroll Indicator",
 	"category": "widgets",
-	"icon": "arrow-down",
+	"icon": "mouse",
 	"description": "An animated scroll indicator with multiple icon styles that encourages users to scroll down the page.",
 	"example": {},
 	"attributes": {
@@ -32,6 +32,14 @@
 		"customText": {
 			"type": "string",
 			"default": "Scroll down"
+		},
+		"positionMode": {
+			"type": "string",
+			"default": "flow"
+		},
+		"screenPosition": {
+			"type": "string",
+			"default": "bottom-center"
 		}
 	},
 	"supports": {

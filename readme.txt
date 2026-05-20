@@ -2,7 +2,7 @@
 Contributors: derekhanson
 Tags: block, scroll, animation, indicator, gutenberg
 Requires at least: 6.4
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -23,6 +23,7 @@ The block is intentionally lightweight. Animations are handled with CSS, respect
 * Five icon styles: mouse, arrow, chevron, dots, and hand.
 * Preset sizes plus a custom CSS size value.
 * Native block editor controls for text color, spacing, typography, and alignment.
+* Optional absolute positioning for bottom-left, bottom-center, and bottom-right placement inside hero-style sections.
 * CSS-only animation that respects the visitor's reduced-motion preference.
 * Optional text label beneath the icon.
 * Optional hide-after-scrolling behavior.

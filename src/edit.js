@@ -15,6 +15,11 @@ import {
 	getIconType,
 	getSizeValue,
 } from './icons';
+import {
+	getPositionClassNames,
+	getPositionMode,
+	getScreenPosition,
+} from './position';
 
 const ICON_OPTIONS = [
 	{ value: 'mouse', label: __( 'Mouse', 'scroll-indicator' ) },
@@ -29,6 +34,15 @@ const ICON_OPTIONS = [
 
 const SIZE_OPTIONS = [ 'S', 'M', 'L', 'XL', 'custom' ];
 
+const SCREEN_POSITION_OPTIONS = [
+	{ value: 'bottom-left', label: __( 'Bottom left', 'scroll-indicator' ) },
+	{
+		value: 'bottom-center',
+		label: __( 'Bottom center', 'scroll-indicator' ),
+	},
+	{ value: 'bottom-right', label: __( 'Bottom right', 'scroll-indicator' ) },
+];
+
 export default function Edit( { attributes, setAttributes } ) {
 	const {
 		iconType = 'mouse',
@@ -37,12 +51,20 @@ export default function Edit( { attributes, setAttributes } ) {
 		hideAfterScrolling = false,
 		showText = true,
 		customText = 'Scroll down',
+		positionMode = 'flow',
+		screenPosition = 'bottom-center',
 	} = attributes;
 
 	const normalizedIconType = getIconType( iconType );
 	const sizeValue = getSizeValue( iconSize, customSizeValue );
+	const normalizedPositionMode = getPositionMode( positionMode );
+	const normalizedScreenPosition = getScreenPosition( screenPosition );
 
 	const blockProps = useBlockProps( {
+		className: getPositionClassNames(
+			normalizedPositionMode,
+			normalizedScreenPosition
+		),
 		style: {
 			'--scroll-indicator-size': sizeValue,
 		},
@@ -118,6 +140,52 @@ export default function Edit( { attributes, setAttributes } ) {
 							/>
 						) }
 					</fieldset>
+				</PanelBody>
+				<PanelBody
+					title={ __( 'Position', 'scroll-indicator' ) }
+					initialOpen={ false }
+				>
+					<ToggleControl
+						label={ __(
+							'Use absolute positioning',
+							'scroll-indicator'
+						) }
+						help={ __(
+							'Pin the indicator to the bottom of its containing section, such as a Cover block.',
+							'scroll-indicator'
+						) }
+						checked={ normalizedPositionMode === 'absolute' }
+						onChange={ ( value ) =>
+							setAttributes( {
+								positionMode: value ? 'absolute' : 'flow',
+							} )
+						}
+					/>
+					{ normalizedPositionMode === 'absolute' && (
+						<fieldset className="scroll-indicator-position-picker">
+							<legend>
+								{ __( 'Screen Position', 'scroll-indicator' ) }
+							</legend>
+							<ButtonGroup className="scroll-indicator-position-buttons">
+								{ SCREEN_POSITION_OPTIONS.map( ( option ) => (
+									<Button
+										key={ option.value }
+										isPressed={
+											normalizedScreenPosition ===
+											option.value
+										}
+										onClick={ () =>
+											setAttributes( {
+												screenPosition: option.value,
+											} )
+										}
+									>
+										{ option.label }
+									</Button>
+								) ) }
+							</ButtonGroup>
+						</fieldset>
+					) }
 				</PanelBody>
 				<PanelBody
 					title={ __( 'Text', 'scroll-indicator' ) }

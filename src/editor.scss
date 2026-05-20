@@ -1,4 +1,6 @@
-.scroll-indicator-icon-picker {
+.scroll-indicator-icon-picker,
+.scroll-indicator-size-picker,
+.scroll-indicator-position-picker {
 	border: 0;
 	padding: 0;
 	margin: 0 0 16px;
@@ -29,18 +31,13 @@
 	}
 }
 
-.scroll-indicator-size-picker {
-	border: 0;
-	padding: 0;
-	margin: 0;
-
-	legend {
-		font-weight: 500;
-		margin-bottom: 8px;
-	}
-}
-
 .scroll-indicator-size-buttons {
 	display: flex;
 	margin-bottom: 12px;
+}
+
+.scroll-indicator-position-buttons {
+	display: grid;
+	gap: 4px;
+	grid-template-columns: 1fr;
 }

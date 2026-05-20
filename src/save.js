@@ -1,5 +1,6 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { IconRenderer, getIconType, getSizeValue } from './icons';
+import { getPositionClassNames } from './position';
 
 export default function save( { attributes } ) {
 	const {
@@ -9,6 +10,8 @@ export default function save( { attributes } ) {
 		hideAfterScrolling = false,
 		showText = true,
 		customText = 'Scroll down',
+		positionMode = 'flow',
+		screenPosition = 'bottom-center',
 	} = attributes;
 
 	const normalizedIconType = getIconType( iconType );
@@ -16,6 +19,7 @@ export default function save( { attributes } ) {
 	const label = customText || 'Scroll down';
 
 	const blockProps = useBlockProps.save( {
+		className: getPositionClassNames( positionMode, screenPosition ),
 		style: {
 			'--scroll-indicator-size': sizeValue,
 		},

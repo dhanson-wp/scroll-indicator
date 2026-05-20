@@ -11,6 +11,7 @@ Site builders can choose an icon style, tune the size and color, add optional te
 - Five animated icon styles: mouse, arrow, chevron, dots, and hand.
 - Preset sizes plus a custom CSS size value.
 - Native block editor support for text color, spacing, typography, and alignment.
+- Optional absolute positioning for bottom-left, bottom-center, and bottom-right placement inside hero-style sections.
 - CSS-only animation that respects `prefers-reduced-motion`.
 - Optional helper text beneath the icon.
 - Optional hide-after-scrolling behavior.
