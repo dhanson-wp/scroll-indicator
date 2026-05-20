@@ -1,5 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	FontSizePicker,
+} from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
 import {
 	desktop,
@@ -29,6 +33,7 @@ import {
 	getPositionMode,
 	getPositionStyle,
 	getAbsoluteCoordinate,
+	getFlowAlignment,
 	getScreenPosition,
 } from './position';
 
@@ -43,12 +48,39 @@ const ICON_OPTIONS = [
 	{ value: 'hand-point', label: __( 'Hand', 'scroll-indicator' ) },
 ];
 
-const SIZE_OPTIONS = [ 'S', 'M', 'L', 'XL', 'custom' ];
+const ICON_SIZE_OPTIONS = [
+	{ name: __( 'Small', 'scroll-indicator' ), slug: 'small', size: '18px' },
+	{ name: __( 'Medium', 'scroll-indicator' ), slug: 'medium', size: '24px' },
+	{ name: __( 'Large', 'scroll-indicator' ), slug: 'large', size: '32px' },
+	{
+		name: __( 'Extra Large', 'scroll-indicator' ),
+		slug: 'extra-large',
+		size: '48px',
+	},
+];
 
 const POSITION_MODE_OPTIONS = [
 	{ value: 'flow', label: __( 'Flow', 'scroll-indicator' ) },
 	{ value: 'fixed', label: __( 'Fixed', 'scroll-indicator' ) },
 	{ value: 'absolute', label: __( 'Absolute', 'scroll-indicator' ) },
+];
+
+const FLOW_ALIGNMENT_OPTIONS = [
+	{
+		value: 'left',
+		label: __( 'Align left', 'scroll-indicator' ),
+		icon: positionLeft,
+	},
+	{
+		value: 'center',
+		label: __( 'Align center', 'scroll-indicator' ),
+		icon: positionCenter,
+	},
+	{
+		value: 'right',
+		label: __( 'Align right', 'scroll-indicator' ),
+		icon: positionRight,
+	},
 ];
 
 const SCREEN_POSITION_OPTIONS = [
@@ -69,7 +101,7 @@ const SCREEN_POSITION_OPTIONS = [
 	},
 ];
 
-export default function Edit( { attributes, setAttributes } ) {
+export default function Edit( { attributes, setAttributes, isSelected } ) {
 	const {
 		iconType = 'mouse',
 		iconSize = 'M',
@@ -90,6 +122,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const normalizedScreenPosition = getScreenPosition( screenPosition );
 	const normalizedAbsoluteX = getAbsoluteCoordinate( absoluteX, 50 );
 	const normalizedAbsoluteY = getAbsoluteCoordinate( absoluteY, 85 );
+	const normalizedFlowAlign = getFlowAlignment( attributes.flowAlign );
 
 	function updateAbsolutePosition( event ) {
 		const wrapper = blockRef.current;
@@ -121,13 +154,16 @@ export default function Edit( { attributes, setAttributes } ) {
 	}
 
 	function startAbsoluteDrag( event ) {
-		if ( normalizedPositionMode !== 'absolute' || event.button !== 0 ) {
+		if (
+			normalizedPositionMode !== 'absolute' ||
+			event.button !== 0 ||
+			! isSelected
+		) {
 			return;
 		}
 
 		event.preventDefault();
 		event.stopPropagation();
-		updateAbsolutePosition( event );
 
 		const ownerDocument = event.currentTarget.ownerDocument;
 		const handlePointerMove = ( moveEvent ) => {
@@ -149,7 +185,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		ref: blockRef,
 		className: getPositionClassNames(
 			normalizedPositionMode,
-			normalizedScreenPosition
+			normalizedScreenPosition,
+			normalizedFlowAlign
 		),
 		style: {
 			'--scroll-indicator-size': sizeValue,
@@ -189,48 +226,28 @@ export default function Edit( { attributes, setAttributes } ) {
 										label={ option.label }
 										showTooltip
 									>
-										<IconComponent />
+										<span
+											className={ `scroll-indicator-icon-preview icon-${ option.value }` }
+										>
+											<IconComponent />
+										</span>
 									</Button>
 								);
 							} ) }
 						</ButtonGroup>
 					</fieldset>
-					<fieldset className="scroll-indicator-size-picker">
-						<legend>{ __( 'Size', 'scroll-indicator' ) }</legend>
-						<ButtonGroup className="scroll-indicator-size-buttons">
-							{ SIZE_OPTIONS.map( ( size ) => (
-								<Button
-									key={ size }
-									isPressed={ iconSize === size }
-									onClick={ () =>
-										setAttributes( { iconSize: size } )
-									}
-								>
-									{ size === 'custom'
-										? __( 'Custom', 'scroll-indicator' )
-										: size }
-								</Button>
-							) ) }
-						</ButtonGroup>
-						{ iconSize === 'custom' && (
-							<TextControl
-								label={ __(
-									'Custom Size',
-									'scroll-indicator'
-								) }
-								value={ customSizeValue }
-								onChange={ ( value ) =>
-									setAttributes( {
-										customSizeValue: value,
-									} )
-								}
-								help={ __(
-									'Use a CSS size such as 24px, 2rem, or 3em.',
-									'scroll-indicator'
-								) }
-							/>
-						) }
-					</fieldset>
+					<FontSizePicker
+						fontSizes={ ICON_SIZE_OPTIONS }
+						value={ sizeValue }
+						onChange={ ( value ) =>
+							setAttributes( {
+								iconSize: 'custom',
+								customSizeValue: value || '24px',
+							} )
+						}
+						headingLevel={ 3 }
+						withSlider={ false }
+					/>
 				</PanelBody>
 				<PanelBody
 					title={ __( 'Position', 'scroll-indicator' ) }
@@ -258,6 +275,36 @@ export default function Edit( { attributes, setAttributes } ) {
 							) ) }
 						</ButtonGroup>
 					</fieldset>
+					{ normalizedPositionMode === 'flow' && (
+						<fieldset className="scroll-indicator-position-picker">
+							<legend>
+								{ __( 'Alignment', 'scroll-indicator' ) }
+							</legend>
+							<ButtonGroup className="scroll-indicator-position-buttons">
+								{ FLOW_ALIGNMENT_OPTIONS.map( ( option ) => {
+									const AlignmentIcon = option.icon;
+
+									return (
+										<Button
+											key={ option.value }
+											icon={ AlignmentIcon }
+											label={ option.label }
+											showTooltip
+											isPressed={
+												normalizedFlowAlign ===
+												option.value
+											}
+											onClick={ () =>
+												setAttributes( {
+													flowAlign: option.value,
+												} )
+											}
+										/>
+									);
+								} ) }
+							</ButtonGroup>
+						</fieldset>
+					) }
 					{ normalizedPositionMode === 'fixed' && (
 						<fieldset className="scroll-indicator-position-picker">
 							<legend>

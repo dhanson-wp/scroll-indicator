@@ -23,6 +23,14 @@
 		justify-content: flex-end;
 	}
 
+	&.is-flow-align-left {
+		justify-content: flex-start;
+	}
+
+	&.is-flow-align-right {
+		justify-content: flex-end;
+	}
+
 	&.is-position-fixed {
 		bottom: clamp(16px, 4vw, 32px);
 		left: 50%;
@@ -77,7 +85,9 @@
 		text-align: center;
 
 		&:focus-visible {
-			outline: 2px solid currentcolor;
+			border-radius: 8px;
+			box-shadow: 0 0 0 2px currentcolor;
+			outline: 2px solid transparent;
 			outline-offset: 4px;
 		}
 
@@ -100,18 +110,9 @@
 	}
 }
 
-.wp-block-cover:has(.wp-block-scroll-indicator-scroll-indicator.is-position-absolute) {
+.wp-block-cover:has(.wp-block-scroll-indicator-scroll-indicator.is-position-absolute),
+.wp-block-group:has(.wp-block-scroll-indicator-scroll-indicator.is-position-absolute) {
 	position: relative;
-
-	// Pin absolute indicators to the full Cover instead of the inner content box.
-	> .wp-block-cover__inner-container {
-		position: static;
-
-		> :not(.wp-block-scroll-indicator-scroll-indicator) {
-			position: relative;
-			z-index: 1;
-		}
-	}
 }
 
 // Animations — only when user hasn't requested reduced motion

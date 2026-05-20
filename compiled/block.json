@@ -48,6 +48,10 @@
     "absoluteY": {
       "type": "number",
       "default": 85
+    },
+    "flowAlign": {
+      "type": "string",
+      "default": "center"
     }
   },
   "supports": {

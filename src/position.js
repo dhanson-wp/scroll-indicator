@@ -10,6 +10,12 @@ const SCREEN_POSITION_MAP = {
 	'bottom-right': 'bottom-right',
 };
 
+const FLOW_ALIGNMENT_MAP = {
+	left: 'left',
+	center: 'center',
+	right: 'right',
+};
+
 export function getPositionMode( positionMode ) {
 	return POSITION_MODE_MAP[ positionMode ] || POSITION_MODE_MAP.flow;
 }
@@ -19,6 +25,10 @@ export function getScreenPosition( screenPosition ) {
 		SCREEN_POSITION_MAP[ screenPosition ] ||
 		SCREEN_POSITION_MAP[ 'bottom-center' ]
 	);
+}
+
+export function getFlowAlignment( flowAlign ) {
+	return FLOW_ALIGNMENT_MAP[ flowAlign ] || FLOW_ALIGNMENT_MAP.center;
 }
 
 export function getAbsoluteCoordinate( coordinate, fallback ) {
@@ -34,7 +44,11 @@ export function getAbsoluteCoordinate( coordinate, fallback ) {
 	return Math.min( 100, Math.max( 0, numericCoordinate ) );
 }
 
-export function getPositionClassNames( positionMode, screenPosition ) {
+export function getPositionClassNames(
+	positionMode,
+	screenPosition,
+	flowAlign = 'center'
+) {
 	const normalizedPositionMode = getPositionMode( positionMode );
 
 	if ( normalizedPositionMode === 'fixed' ) {
@@ -45,6 +59,12 @@ export function getPositionClassNames( positionMode, screenPosition ) {
 
 	if ( normalizedPositionMode === 'absolute' ) {
 		return 'is-position-absolute';
+	}
+
+	const normalizedFlowAlign = getFlowAlignment( flowAlign );
+
+	if ( normalizedFlowAlign !== 'center' ) {
+		return `is-flow-align-${ normalizedFlowAlign }`;
 	}
 
 	return '';

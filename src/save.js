@@ -14,6 +14,7 @@ export default function save( { attributes } ) {
 		screenPosition = 'bottom-center',
 		absoluteX = 50,
 		absoluteY = 85,
+		flowAlign = 'center',
 	} = attributes;
 
 	const normalizedIconType = getIconType( iconType );
@@ -21,7 +22,11 @@ export default function save( { attributes } ) {
 	const label = customText || 'Scroll down';
 
 	const blockProps = useBlockProps.save( {
-		className: getPositionClassNames( positionMode, screenPosition ),
+		className: getPositionClassNames(
+			positionMode,
+			screenPosition,
+			flowAlign
+		),
 		style: {
 			'--scroll-indicator-size': sizeValue,
 			...getPositionStyle( positionMode, absoluteX, absoluteY ),

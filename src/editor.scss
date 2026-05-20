@@ -31,9 +31,12 @@
 	}
 }
 
-.scroll-indicator-size-buttons {
-	display: flex;
-	margin-bottom: 12px;
+.scroll-indicator-icon-preview {
+	align-items: center;
+	display: inline-flex;
+	height: 20px;
+	justify-content: center;
+	width: 20px;
 }
 
 .scroll-indicator-mode-buttons {
