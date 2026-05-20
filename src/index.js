@@ -1,13 +1,13 @@
 import { registerBlockType } from '@wordpress/blocks';
+import { arrowDown } from '@wordpress/icons';
 import './style.scss';
 
 import Edit from './edit';
-import { MouseIcon } from './icons';
 import save from './save';
 import metadata from './block.json';
 
 registerBlockType( metadata.name, {
-	icon: <MouseIcon />,
+	icon: arrowDown,
 	edit: Edit,
 	save,
 } );

@@ -15,6 +15,7 @@
         "start": "wp-scripts start --blocks-manifest --output-path=compiled"
     },
     "devDependencies": {
+        "@wordpress/icons": "^13.1.0",
         "@wordpress/scripts": "^30.15.0"
     }
 }

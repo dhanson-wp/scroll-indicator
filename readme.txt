@@ -23,7 +23,7 @@ The block is intentionally lightweight. Animations are handled with CSS, respect
 * Five icon styles: mouse, arrow, chevron, dots, and hand.
 * Preset sizes plus a custom CSS size value.
 * Native block editor controls for text color, spacing, typography, and alignment.
-* Optional absolute positioning for bottom-left, bottom-center, and bottom-right placement inside hero-style sections.
+* Fixed screen positioning and draggable absolute positioning for hero-style sections.
 * CSS-only animation that respects the visitor's reduced-motion preference.
 * Optional text label beneath the icon.
 * Optional hide-after-scrolling behavior.

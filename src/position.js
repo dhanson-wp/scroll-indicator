@@ -1,5 +1,6 @@
 const POSITION_MODE_MAP = {
 	flow: 'flow',
+	fixed: 'fixed',
 	absolute: 'absolute',
 };
 
@@ -20,12 +21,42 @@ export function getScreenPosition( screenPosition ) {
 	);
 }
 
-export function getPositionClassNames( positionMode, screenPosition ) {
-	if ( getPositionMode( positionMode ) !== 'absolute' ) {
-		return '';
+export function getAbsoluteCoordinate( coordinate, fallback ) {
+	const numericCoordinate =
+		typeof coordinate === 'number'
+			? coordinate
+			: Number.parseFloat( coordinate );
+
+	if ( ! Number.isFinite( numericCoordinate ) ) {
+		return fallback;
 	}
 
-	return `is-position-absolute is-screen-position-${ getScreenPosition(
-		screenPosition
-	) }`;
+	return Math.min( 100, Math.max( 0, numericCoordinate ) );
+}
+
+export function getPositionClassNames( positionMode, screenPosition ) {
+	const normalizedPositionMode = getPositionMode( positionMode );
+
+	if ( normalizedPositionMode === 'fixed' ) {
+		return `is-position-fixed is-screen-position-${ getScreenPosition(
+			screenPosition
+		) }`;
+	}
+
+	if ( normalizedPositionMode === 'absolute' ) {
+		return 'is-position-absolute';
+	}
+
+	return '';
+}
+
+export function getPositionStyle( positionMode, absoluteX, absoluteY ) {
+	if ( getPositionMode( positionMode ) !== 'absolute' ) {
+		return {};
+	}
+
+	return {
+		'--scroll-indicator-x': `${ getAbsoluteCoordinate( absoluteX, 50 ) }%`,
+		'--scroll-indicator-y': `${ getAbsoluteCoordinate( absoluteY, 85 ) }%`,
+	};
 }
