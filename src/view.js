@@ -12,7 +12,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
 			'.wp-block-scroll-indicator-scroll-indicator'
 		);
 
-		indicator.addEventListener( 'click', function () {
+		function scrollOneViewport() {
 			const windowHeight = window.innerHeight;
 			const targetY = window.scrollY + windowHeight;
 
@@ -20,6 +20,17 @@ document.addEventListener( 'DOMContentLoaded', function () {
 				top: targetY,
 				behavior: 'smooth',
 			} );
+		}
+
+		indicator.addEventListener( 'click', scrollOneViewport );
+
+		indicator.addEventListener( 'keydown', function ( event ) {
+			if ( event.key !== 'Enter' && event.key !== ' ' ) {
+				return;
+			}
+
+			event.preventDefault();
+			scrollOneViewport();
 		} );
 
 		indicator.style.cursor = 'pointer';

@@ -1,46 +1,56 @@
-# Scroll Indicator Block
+=== Scroll Indicator ===
+Contributors: derekhanson
+Tags: block, scroll, animation, indicator, gutenberg
+Requires at least: 6.4
+Tested up to: 6.9
+Requires PHP: 7.4
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress block that adds an animated scroll indicator to your pages — nudging visitors to keep scrolling. Choose from five icon styles, pick a size, set a color, and drop it anywhere in the block editor.
+Add an animated, customizable scroll indicator block to guide visitors down the page.
 
-### Features
+== Description ==
 
-- **Five icon styles** — Mouse, Arrow, Chevron, Dots, Hand
-- **T-shirt sizing** — S / M / L / XL, plus a custom size with unit control
-- **Core color support** — uses the block editor's native color picker; all icons render with `currentColor`
-- **CSS-only animations** — no JavaScript animation libraries; respects `prefers-reduced-motion`
-- **Click to scroll** — clicking the indicator smoothly scrolls down one viewport height
-- **Optional text label** — show or hide a customizable label beneath the icon
-- **Hide after scrolling** — optionally fade the indicator out once the user starts scrolling
-- **Accessible** — decorative SVGs are `aria-hidden`, keyboard navigation preserved
+Scroll Indicator adds a lightweight block that encourages visitors to continue scrolling. Choose from five icon styles, set the size and color, show optional text, and enable click-to-scroll behavior without adding animation libraries.
 
-### Development
+= Features =
 
-1. Clone the repository into your WordPress plugins directory.
-2. Run `npm install` to install dependencies.
-3. Run `npm start` to start the development server.
-4. Activate the plugin on your local WordPress site.
-5. Add the Scroll Indicator block to any page or post.
+* Five icon styles: mouse, arrow, chevron, dots, and hand.
+* Preset sizes plus a custom CSS size value.
+* Native block editor text color, spacing, typography, and alignment support.
+* CSS-only animation that respects the visitor's reduced-motion preference.
+* Optional text label.
+* Optional hide-after-scrolling behavior.
+* Keyboard-accessible click-to-scroll control on the front end.
 
-### Building
+== Installation ==
 
-```bash
-npm run build
-```
+1. Upload the `scroll-indicator` folder to the `/wp-content/plugins/` directory, or install it through the WordPress Plugins screen.
+2. Activate the plugin through the Plugins screen in WordPress.
+3. Add the Scroll Indicator block to any post or page.
 
-### How it works
+== Frequently Asked Questions ==
 
-The block renders an inline SVG icon sized via a `--scroll-indicator-size` CSS custom property. Color is inherited from WordPress's core text color support — no inline styles, no hardcoded values.
+= Does this plugin require a JavaScript animation library? =
 
-Animation is handled entirely in CSS. The `view.js` file is vanilla JavaScript that handles click-to-scroll and the optional hide-after-scrolling behavior. It loads only when the block is present on the page.
+No. The animation is handled with CSS, and the small front-end script is only used for click-to-scroll and the optional hide-after-scrolling behavior.
 
-```css
-@media (prefers-reduced-motion: no-preference) {
-    .scroll-indicator svg {
-        animation: bounce 2s infinite;
-    }
-}
-```
+= Can I change the icon color? =
 
-### License
+Yes. The block uses WordPress core text color support, so colors can be managed through the block editor.
 
-GPLv2 or later — see [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html).
+= Does it support reduced motion preferences? =
+
+Yes. Animations only run when the visitor has not requested reduced motion.
+
+== Screenshots ==
+
+1. Scroll Indicator block controls in the editor.
+2. Scroll Indicator block displayed on the front end.
+
+== Changelog ==
+
+= 1.0.0 =
+
+* Initial release.

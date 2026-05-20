@@ -23,7 +23,9 @@ export default function save( { attributes } ) {
 		<div { ...blockProps }>
 			<div
 				className={ `scroll-indicator icon-${ iconType }` }
-				role="presentation"
+				role="button"
+				tabIndex="0"
+				aria-label={ customText || 'Scroll down' }
 				data-hide-after-scrolling={
 					hideAfterScrolling ? 'true' : 'false'
 				}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scroll-indicator/scroll-indicator",
+  "version": "1.0.0",
+  "title": "Scroll Indicator",
+  "category": "widgets",
+  "icon": "arrow-down",
+  "description": "An animated scroll indicator with multiple icon styles that encourages users to scroll down the page.",
+  "example": {},
+  "attributes": {
+    "iconType": {
+      "type": "string",
+      "default": "mouse"
+    },
+    "iconSize": {
+      "type": "string",
+      "default": "M"
+    },
+    "customSizeValue": {
+      "type": "string",
+      "default": "24px"
+    },
+    "hideAfterScrolling": {
+      "type": "boolean",
+      "default": false
+    },
+    "showText": {
+      "type": "boolean",
+      "default": true
+    },
+    "customText": {
+      "type": "string",
+      "default": "Scroll down"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "left",
+      "center",
+      "right"
+    ],
+    "color": {
+      "text": true,
+      "background": false
+    },
+    "typography": {
+      "fontSize": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "textdomain": "scroll-indicator",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}
