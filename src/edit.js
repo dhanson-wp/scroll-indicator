@@ -107,7 +107,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		iconType = 'mouse',
 		iconSize = 'M',
 		customSizeValue = '24px',
-		hideAfterScrolling = false,
 		showText = true,
 		customText = 'Scroll down',
 		positionMode = 'flow',
@@ -236,18 +235,23 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 							} ) }
 						</ButtonGroup>
 					</fieldset>
-					<FontSizePicker
-						fontSizes={ ICON_SIZE_OPTIONS }
-						value={ sizeValue }
-						onChange={ ( value ) =>
-							setAttributes( {
-								iconSize: 'custom',
-								customSizeValue: value || '24px',
-							} )
-						}
-						headingLevel={ 3 }
-						withSlider={ false }
-					/>
+					<fieldset className="scroll-indicator-size-picker">
+						<legend>
+							{ __( 'Icon Size', 'scroll-indicator' ) }
+						</legend>
+						<FontSizePicker
+							fontSizes={ ICON_SIZE_OPTIONS }
+							value={ sizeValue }
+							onChange={ ( value ) =>
+								setAttributes( {
+									iconSize: 'custom',
+									customSizeValue: value || '24px',
+								} )
+							}
+							headingLevel={ 3 }
+							withSlider={ false }
+						/>
+					</fieldset>
 				</PanelBody>
 				<PanelBody
 					title={ __( 'Position', 'scroll-indicator' ) }
@@ -403,25 +407,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 							) }
 						/>
 					) }
-				</PanelBody>
-				<PanelBody
-					title={ __( 'Behavior', 'scroll-indicator' ) }
-					initialOpen={ false }
-				>
-					<ToggleControl
-						label={ __(
-							'Hide after scrolling',
-							'scroll-indicator'
-						) }
-						help={ __(
-							'Hide the indicator once user starts scrolling',
-							'scroll-indicator'
-						) }
-						checked={ hideAfterScrolling }
-						onChange={ ( value ) =>
-							setAttributes( { hideAfterScrolling: value } )
-						}
-					/>
 				</PanelBody>
 			</InspectorControls>
 			<div { ...blockProps }>

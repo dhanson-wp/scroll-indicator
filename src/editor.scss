@@ -11,6 +11,13 @@
 	}
 }
 
+.scroll-indicator-size-picker {
+
+	.components-font-size-picker > :first-child {
+		display: none;
+	}
+}
+
 .scroll-indicator-icon-buttons {
 	display: flex;
 	flex-wrap: wrap;

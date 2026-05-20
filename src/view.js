@@ -10,12 +10,9 @@ document.addEventListener( 'DOMContentLoaded', function () {
 	);
 
 	scrollIndicators.forEach( function ( indicator ) {
-		const hideAfterScrolling =
-			indicator.getAttribute( 'data-hide-after-scrolling' ) === 'true';
-		const blockElement = indicator.closest(
-			'.wp-block-scroll-indicator-scroll-indicator'
-		);
 		const originalTabIndex = indicator.getAttribute( 'tabindex' );
+		const hideThreshold = 16;
+		let ticking = false;
 
 		function scrollOneViewport() {
 			const windowHeight = window.innerHeight;
@@ -31,75 +28,73 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 		indicator.style.cursor = 'pointer';
 
-		if ( hideAfterScrolling && blockElement ) {
-			let blockTop = blockElement.offsetTop;
-			let blockBottom = blockTop + blockElement.offsetHeight;
-			const transition = prefersReducedMotion.matches
-				? 'none'
-				: 'opacity 0.45s ease, transform 0.45s ease, visibility 0s linear 0.45s';
-			const visibleTransition = prefersReducedMotion.matches
-				? 'none'
-				: 'opacity 0.35s ease, transform 0.35s ease';
+		const hiddenTransition = prefersReducedMotion.matches
+			? 'none'
+			: 'opacity 0.45s ease, transform 0.45s ease, visibility 0s linear 0.45s';
+		const visibleTransition = prefersReducedMotion.matches
+			? 'none'
+			: 'opacity 0.35s ease, transform 0.35s ease, visibility 0s';
 
-			function updateBlockPosition() {
-				blockTop = blockElement.offsetTop;
-				blockBottom = blockTop + blockElement.offsetHeight;
-			}
+		function setIndicatorVisibility( isVisible ) {
+			indicator.style.transition = isVisible
+				? visibleTransition
+				: hiddenTransition;
+			indicator.style.opacity = isVisible ? '1' : '0';
+			indicator.style.visibility = isVisible ? 'visible' : 'hidden';
+			indicator.style.pointerEvents = isVisible ? 'auto' : 'none';
+			indicator.style.transform = isVisible
+				? 'translateY(0)'
+				: 'translateY(10px)';
 
-			function setIndicatorVisibility( isVisible ) {
-				indicator.style.transition = isVisible
-					? visibleTransition
-					: transition;
-				indicator.style.opacity = isVisible ? '1' : '0';
-				indicator.style.visibility = isVisible ? 'visible' : 'hidden';
-				indicator.style.pointerEvents = isVisible ? 'auto' : 'none';
-				indicator.style.transform = isVisible
-					? 'translateY(0)'
-					: 'translateY(10px)';
+			if ( isVisible ) {
+				indicator.removeAttribute( 'aria-hidden' );
 
-				if ( isVisible ) {
-					indicator.removeAttribute( 'aria-hidden' );
-
-					if ( originalTabIndex === null ) {
-						indicator.removeAttribute( 'tabindex' );
-					} else {
-						indicator.setAttribute( 'tabindex', originalTabIndex );
-					}
+				if ( originalTabIndex === null ) {
+					indicator.removeAttribute( 'tabindex' );
 				} else {
-					indicator.setAttribute( 'aria-hidden', 'true' );
-					indicator.setAttribute( 'tabindex', '-1' );
+					indicator.setAttribute( 'tabindex', originalTabIndex );
+				}
+			} else {
+				indicator.setAttribute( 'aria-hidden', 'true' );
+				indicator.setAttribute( 'tabindex', '-1' );
 
-					if ( indicator.ownerDocument.activeElement === indicator ) {
-						indicator.blur();
-					}
+				if ( indicator.ownerDocument.activeElement === indicator ) {
+					indicator.blur();
 				}
 			}
+		}
 
-			window.addEventListener( 'resize', function () {
-				updateBlockPosition();
+		function handleScroll() {
+			setIndicatorVisibility( window.scrollY <= hideThreshold );
+		}
+
+		function requestVisibilityUpdate() {
+			if ( ticking ) {
+				return;
+			}
+
+			ticking = true;
+			window.requestAnimationFrame( function () {
 				handleScroll();
+				ticking = false;
 			} );
+		}
 
-			function handleScroll() {
-				const scrollTop = window.scrollY;
-				const viewportHeight = window.innerHeight;
-				const viewportBottom = scrollTop + viewportHeight;
-
-				if (
-					scrollTop <= blockTop ||
-					( blockTop < viewportBottom && blockBottom > scrollTop )
-				) {
-					setIndicatorVisibility( true );
-				} else {
-					setIndicatorVisibility( false );
-				}
-			}
-
+		function handleReducedMotionChange() {
 			handleScroll();
+		}
 
-			window.addEventListener( 'scroll', handleScroll, {
-				passive: true,
-			} );
+		handleScroll();
+
+		window.addEventListener( 'scroll', requestVisibilityUpdate, {
+			passive: true,
+		} );
+
+		if ( typeof prefersReducedMotion.addEventListener === 'function' ) {
+			prefersReducedMotion.addEventListener(
+				'change',
+				handleReducedMotionChange
+			);
 		}
 	} );
 } );

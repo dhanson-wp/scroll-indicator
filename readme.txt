@@ -16,7 +16,7 @@ Scroll Indicator adds a focused block for landing pages, hero sections, editoria
 
 Choose from multiple icon styles, adjust the size, use native WordPress text color controls, add optional helper text, and let visitors click or keyboard-activate the indicator to move smoothly down the page.
 
-The block is intentionally lightweight. Animations are handled with CSS, respect reduced-motion preferences, and the front-end script is limited to click-to-scroll and optional hide-after-scrolling behavior.
+The block is intentionally lightweight. Animations are handled with CSS, respect reduced-motion preferences, and the front-end script is limited to click-to-scroll and automatic hide-on-scroll behavior.
 
 = Key Features =
 
@@ -26,7 +26,7 @@ The block is intentionally lightweight. Animations are handled with CSS, respect
 * Fixed screen positioning and draggable absolute positioning for hero-style sections.
 * CSS-only animation that respects the visitor's reduced-motion preference.
 * Optional text label beneath the icon.
-* Optional hide-after-scrolling behavior.
+* Automatic hide-on-scroll behavior.
 * Keyboard-accessible click-to-scroll interaction.
 * No animation libraries or heavy runtime dependencies.
 
@@ -53,7 +53,7 @@ Source code and build tooling are maintained at https://github.com/dhanson-wp/sc
 
 = Does this plugin require a JavaScript animation library? =
 
-No. Animations are handled with CSS. The front-end script only powers click-to-scroll and the optional hide-after-scrolling behavior.
+No. Animations are handled with CSS. The front-end script only powers click-to-scroll and automatic hide-on-scroll behavior.
 
 = Can I change the icon color? =
 
@@ -69,7 +69,7 @@ Yes. The front-end indicator is saved as a keyboard-focusable button-like contro
 
 = Will the block work without JavaScript? =
 
-The icon and optional text still render without JavaScript. JavaScript is only needed for click-to-scroll and hide-after-scrolling behavior.
+The icon and optional text still render without JavaScript. JavaScript is only needed for click-to-scroll and automatic hide-on-scroll behavior.
 
 == Changelog ==
 

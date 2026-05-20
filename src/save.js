@@ -7,7 +7,6 @@ export default function save( { attributes } ) {
 		iconType = 'mouse',
 		iconSize = 'M',
 		customSizeValue = '24px',
-		hideAfterScrolling = false,
 		showText = true,
 		customText = 'Scroll down',
 		positionMode = 'flow',
@@ -39,9 +38,7 @@ export default function save( { attributes } ) {
 				type="button"
 				className={ `scroll-indicator icon-${ normalizedIconType }` }
 				aria-label={ label }
-				data-hide-after-scrolling={
-					hideAfterScrolling ? 'true' : 'false'
-				}
+				data-hide-after-scrolling="true"
 			>
 				<IconRenderer iconType={ normalizedIconType } />
 				{ showText && <div className="scroll-text">{ label }</div> }

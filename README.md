@@ -14,7 +14,7 @@ Site builders can choose an icon style, tune the size and color, add optional te
 - Fixed screen positioning and draggable absolute positioning for hero-style sections.
 - CSS-only animation that respects `prefers-reduced-motion`.
 - Optional helper text beneath the icon.
-- Optional hide-after-scrolling behavior.
+- Automatic hide-on-scroll behavior.
 - Keyboard-accessible click-to-scroll behavior on the front end.
 - No animation libraries or heavy runtime dependencies.
 

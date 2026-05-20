@@ -23,7 +23,7 @@
 		},
 		"hideAfterScrolling": {
 			"type": "boolean",
-			"default": false
+			"default": true
 		},
 		"showText": {
 			"type": "boolean",
