@@ -20,6 +20,7 @@ import {
 	Button,
 	RangeControl,
 } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
 
 import './editor.scss';
 import {
@@ -101,7 +102,7 @@ const SCREEN_POSITION_OPTIONS = [
 	},
 ];
 
-export default function Edit( { attributes, setAttributes, isSelected } ) {
+export default function Edit( { attributes, setAttributes, clientId } ) {
 	const {
 		iconType = 'mouse',
 		iconSize = 'M',
@@ -116,6 +117,7 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 	} = attributes;
 
 	const blockRef = useRef();
+	const { selectBlock } = useDispatch( 'core/block-editor' );
 	const normalizedIconType = getIconType( iconType );
 	const sizeValue = getSizeValue( iconSize, customSizeValue );
 	const normalizedPositionMode = getPositionMode( positionMode );
@@ -154,16 +156,14 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 	}
 
 	function startAbsoluteDrag( event ) {
-		if (
-			normalizedPositionMode !== 'absolute' ||
-			event.button !== 0 ||
-			! isSelected
-		) {
+		if ( normalizedPositionMode !== 'absolute' || event.button !== 0 ) {
 			return;
 		}
 
 		event.preventDefault();
 		event.stopPropagation();
+		selectBlock( clientId );
+		updateAbsolutePosition( event );
 
 		const ownerDocument = event.currentTarget.ownerDocument;
 		const handlePointerMove = ( moveEvent ) => {

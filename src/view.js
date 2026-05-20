@@ -34,6 +34,12 @@ document.addEventListener( 'DOMContentLoaded', function () {
 		if ( hideAfterScrolling && blockElement ) {
 			let blockTop = blockElement.offsetTop;
 			let blockBottom = blockTop + blockElement.offsetHeight;
+			const transition = prefersReducedMotion.matches
+				? 'none'
+				: 'opacity 0.45s ease, transform 0.45s ease, visibility 0s linear 0.45s';
+			const visibleTransition = prefersReducedMotion.matches
+				? 'none'
+				: 'opacity 0.35s ease, transform 0.35s ease';
 
 			function updateBlockPosition() {
 				blockTop = blockElement.offsetTop;
@@ -42,11 +48,14 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 			function setIndicatorVisibility( isVisible ) {
 				indicator.style.transition = isVisible
-					? 'opacity 0.3s ease-in'
-					: 'opacity 0.3s ease-out';
+					? visibleTransition
+					: transition;
 				indicator.style.opacity = isVisible ? '1' : '0';
 				indicator.style.visibility = isVisible ? 'visible' : 'hidden';
 				indicator.style.pointerEvents = isVisible ? 'auto' : 'none';
+				indicator.style.transform = isVisible
+					? 'translateY(0)'
+					: 'translateY(10px)';
 
 				if ( isVisible ) {
 					indicator.removeAttribute( 'aria-hidden' );
