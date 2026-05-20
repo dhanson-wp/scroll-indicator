@@ -11,7 +11,7 @@
 			"step": "installPlugin",
 			"pluginZipFile": {
 				"resource": "url",
-				"url": "https://codeload.github.com/dhanson-wp/scroll-indicator/zip/refs/heads/codex/submission-readiness"
+				"url": "https://raw.githubusercontent.com/dhanson-wp/scroll-indicator/codex/submission-readiness/.wp-playground/scroll-indicator.zip"
 			},
 			"options": {
 				"activate": true
