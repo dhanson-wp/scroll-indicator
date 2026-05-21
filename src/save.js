@@ -6,6 +6,7 @@ import {
 	getFlowAlignment,
 	getScreenPosition,
 	getScreenPositionFromAlignment,
+	getAlignmentClassName,
 } from './position';
 
 export default function save( { attributes } ) {
@@ -39,7 +40,9 @@ export default function save( { attributes } ) {
 			positionMode,
 			normalizedScreenPosition,
 			normalizedFlowAlign
-		),
+		)
+			.concat( ' ', getAlignmentClassName( align ) )
+			.trim(),
 		style: {
 			'--scroll-indicator-size': sizeValue,
 			...getPositionStyle( positionMode, absoluteX, absoluteY ),

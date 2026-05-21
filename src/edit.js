@@ -1,9 +1,15 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	BlockControls,
+	AlignmentToolbar,
+} from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
 import {
 	desktop,
 	dragHandle,
+	moveTo,
 	positionCenter,
 	positionLeft,
 	positionRight,
@@ -15,6 +21,8 @@ import {
 	ButtonGroup,
 	Button,
 	RangeControl,
+	ToolbarButton,
+	ToolbarGroup,
 } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 
@@ -34,6 +42,7 @@ import {
 	getScreenPosition,
 	getAlignmentFromScreenPosition,
 	getScreenPositionFromAlignment,
+	getAlignmentClassName,
 } from './position';
 
 const ICON_OPTIONS = [
@@ -134,6 +143,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	const normalizedFlowAlign = getFlowAlignment(
 		hasCoreAlignment ? align : flowAlign
 	);
+	const toolbarAlignment = hasCoreAlignment ? align : normalizedFlowAlign;
 	const customSizeNumber = getCustomSizeNumber( customSizeValue );
 
 	function getCustomSizeNumber( value ) {
@@ -160,6 +170,23 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		}
 
 		setAttributes( nextAttributes );
+	}
+
+	function setAlignment( nextAlignment ) {
+		const alignment = getFlowAlignment( nextAlignment || 'center' );
+
+		if ( normalizedPositionMode === 'fixed' ) {
+			setAttributes( {
+				align: alignment,
+				screenPosition: getScreenPositionFromAlignment( alignment ),
+			} );
+			return;
+		}
+
+		setAttributes( {
+			align: alignment,
+			flowAlign: alignment,
+		} );
 	}
 
 	function updateAbsolutePosition( event ) {
@@ -223,7 +250,9 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 			normalizedPositionMode,
 			normalizedScreenPosition,
 			normalizedFlowAlign
-		),
+		)
+			.concat( ' ', getAlignmentClassName( align ) )
+			.trim(),
 		style: {
 			'--scroll-indicator-size': sizeValue,
 			...getPositionStyle(
@@ -236,6 +265,25 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
 	return (
 		<>
+			<BlockControls group="block">
+				{ normalizedPositionMode === 'absolute' ? (
+					<ToolbarGroup>
+						<ToolbarButton
+							icon={ moveTo }
+							label={ __(
+								'Drag on canvas to position',
+								'scroll-indicator'
+							) }
+							onClick={ () => selectBlock( clientId ) }
+						/>
+					</ToolbarGroup>
+				) : (
+					<AlignmentToolbar
+						value={ toolbarAlignment }
+						onChange={ setAlignment }
+					/>
+				) }
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody
 					title={ __( 'Settings', 'scroll-indicator' ) }

@@ -57,6 +57,12 @@ export function getScreenPositionFromAlignment( alignment ) {
 	);
 }
 
+export function getAlignmentClassName( alignment ) {
+	const normalizedAlignment = FLOW_ALIGNMENT_MAP[ alignment ];
+
+	return normalizedAlignment ? `align${ normalizedAlignment }` : '';
+}
+
 export function getAbsoluteCoordinate( coordinate, fallback ) {
 	const numericCoordinate =
 		typeof coordinate === 'number'

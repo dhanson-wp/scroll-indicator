@@ -21,6 +21,9 @@
 			"type": "string",
 			"default": "24px"
 		},
+		"align": {
+			"type": "string"
+		},
 		"hideAfterScrolling": {
 			"type": "boolean",
 			"default": true
@@ -56,7 +59,6 @@
 	},
 	"supports": {
 		"html": false,
-		"align": [ "left", "center", "right" ],
 		"color": { "text": true, "background": false },
 		"spacing": { "margin": true, "padding": true }
 	},

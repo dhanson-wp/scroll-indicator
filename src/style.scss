@@ -31,6 +31,24 @@
 		justify-content: flex-end;
 	}
 
+	.is-layout-constrained > &:not(.is-position-fixed):not(.is-position-absolute) {
+		float: none !important;
+		margin-inline-start: auto !important;
+		margin-inline-end: auto !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+		max-width: var(--wp--style--global--content-size);
+		width: 100%;
+	}
+
+	.editor-styles-wrapper .is-layout-constrained > &:not(.is-position-fixed):not(.is-position-absolute) {
+		float: none !important;
+		margin-inline-start: auto !important;
+		margin-inline-end: auto !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+
 	&.is-position-fixed {
 		bottom: clamp(16px, 4vw, 32px);
 		left: 50%;
@@ -114,12 +132,18 @@
 	}
 }
 
-.wp-block-cover:has(.wp-block-scroll-indicator-scroll-indicator.is-position-absolute),
-.wp-block-group:has(.wp-block-scroll-indicator-scroll-indicator.is-position-absolute) {
+.wp-block-cover:has(
+.wp-block-scroll-indicator-scroll-indicator.is-position-absolute
+),
+.wp-block-group:has(
+.wp-block-scroll-indicator-scroll-indicator.is-position-absolute
+) {
 	position: relative;
 }
 
-.wp-block-cover:has(.wp-block-scroll-indicator-scroll-indicator.is-position-absolute) {
+.wp-block-cover:has(
+.wp-block-scroll-indicator-scroll-indicator.is-position-absolute
+) {
 
 	> .wp-block-cover__inner-container {
 		position: static;
