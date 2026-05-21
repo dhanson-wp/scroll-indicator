@@ -119,13 +119,6 @@
 	position: relative;
 }
 
-.wp-block-cover:has(.wp-block-scroll-indicator-scroll-indicator.is-position-absolute) {
-
-	> .wp-block-cover__inner-container {
-		position: static;
-	}
-}
-
 // Animations — only when user hasn't requested reduced motion
 @media (prefers-reduced-motion: no-preference) {
 
