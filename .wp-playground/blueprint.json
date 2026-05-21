@@ -1,0 +1,21 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "7.0"
+	},
+	"landingPage": "/wp-admin/post-new.php?post_type=page",
+	"login": true,
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/dhanson-wp/scroll-indicator/codex/submission-readiness/.wp-playground/scroll-indicator.zip"
+			},
+			"options": {
+				"activate": true
+			}
+		}
+	]
+}

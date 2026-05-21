@@ -1,0 +1,7 @@
+.pressshipignore
+assets/
+src/
+.wp-playground/
+README.md
+package.json
+package-lock.json

@@ -21,9 +21,12 @@
       "type": "string",
       "default": "24px"
     },
+    "align": {
+      "type": "string"
+    },
     "hideAfterScrolling": {
       "type": "boolean",
-      "default": false
+      "default": true
     },
     "showText": {
       "type": "boolean",
@@ -32,21 +35,33 @@
     "customText": {
       "type": "string",
       "default": "Scroll down"
+    },
+    "positionMode": {
+      "type": "string",
+      "default": "flow"
+    },
+    "screenPosition": {
+      "type": "string",
+      "default": "bottom-center"
+    },
+    "absoluteX": {
+      "type": "number",
+      "default": 50
+    },
+    "absoluteY": {
+      "type": "number",
+      "default": 85
+    },
+    "flowAlign": {
+      "type": "string",
+      "default": "center"
     }
   },
   "supports": {
     "html": false,
-    "align": [
-      "left",
-      "center",
-      "right"
-    ],
     "color": {
       "text": true,
       "background": false
-    },
-    "typography": {
-      "fontSize": true
     },
     "spacing": {
       "margin": true,

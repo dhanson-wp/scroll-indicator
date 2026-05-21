@@ -2,32 +2,37 @@
 Contributors: derekhanson
 Tags: block, scroll, animation, indicator, gutenberg
 Requires at least: 6.4
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add a polished, animated scroll indicator block that encourages visitors to keep moving through your page.
+Add an animated scroll indicator block that encourages visitors to keep moving through your page.
 
 == Description ==
 
-Scroll Indicator adds a small, expressive Gutenberg block for landing pages, hero sections, editorial layouts, and long-form content. It gives visitors a clear visual cue that there is more to explore below the fold.
+Scroll Indicator adds a focused block for landing pages, hero sections, editorial layouts, and long-form content. It gives visitors a clear visual cue that there is more to explore below the fold.
 
 Choose from multiple icon styles, adjust the size, use native WordPress text color controls, add optional helper text, and let visitors click or keyboard-activate the indicator to move smoothly down the page.
 
-The block is intentionally lightweight. Animations are handled with CSS, respect reduced-motion preferences, and the front-end script is limited to click-to-scroll and optional hide-after-scrolling behavior.
+The block is intentionally lightweight. Animations are handled with CSS, respect reduced-motion preferences, and the front-end script is limited to click-to-scroll and automatic hide-on-scroll behavior.
 
 = Key Features =
 
 * Five icon styles: mouse, arrow, chevron, dots, and hand.
 * Preset sizes plus a custom CSS size value.
 * Native block editor controls for text color, spacing, typography, and alignment.
+* Fixed screen positioning and draggable absolute positioning for hero-style sections.
 * CSS-only animation that respects the visitor's reduced-motion preference.
 * Optional text label beneath the icon.
-* Optional hide-after-scrolling behavior.
+* Automatic hide-on-scroll behavior.
 * Keyboard-accessible click-to-scroll interaction.
 * No animation libraries or heavy runtime dependencies.
+
+= Development =
+
+Source code and build tooling are maintained at https://github.com/dhanson-wp/scroll-indicator.
 
 = Good For =
 
@@ -48,7 +53,7 @@ The block is intentionally lightweight. Animations are handled with CSS, respect
 
 = Does this plugin require a JavaScript animation library? =
 
-No. Animations are handled with CSS. The front-end script only powers click-to-scroll and the optional hide-after-scrolling behavior.
+No. Animations are handled with CSS. The front-end script only powers click-to-scroll and automatic hide-on-scroll behavior.
 
 = Can I change the icon color? =
 
@@ -64,7 +69,7 @@ Yes. The front-end indicator is saved as a keyboard-focusable button-like contro
 
 = Will the block work without JavaScript? =
 
-The icon and optional text still render without JavaScript. JavaScript is only needed for click-to-scroll and hide-after-scrolling behavior.
+The icon and optional text still render without JavaScript. JavaScript is only needed for click-to-scroll and automatic hide-on-scroll behavior.
 
 == Changelog ==
 

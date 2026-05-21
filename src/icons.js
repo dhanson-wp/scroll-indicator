@@ -1,8 +1,3 @@
-/**
- * SVG icon components for the Scroll Indicator block.
- * Shared between edit.js and save.js.
- */
-
 export const SIZE_MAP = {
 	S: '18px',
 	M: '24px',
@@ -10,9 +5,14 @@ export const SIZE_MAP = {
 	XL: '48px',
 };
 
+const CSS_SIZE_PATTERN = /^(?:\d+|\d*\.\d+)(?:px|em|rem|vh|vw|vmin|vmax|%)$/;
+
 export function getSizeValue( iconSize, customSizeValue ) {
 	if ( iconSize === 'custom' ) {
-		return customSizeValue || '24px';
+		const sizeValue =
+			typeof customSizeValue === 'string' ? customSizeValue.trim() : '';
+
+		return CSS_SIZE_PATTERN.test( sizeValue ) ? sizeValue : '24px';
 	}
 	return SIZE_MAP[ iconSize ] || '24px';
 }
@@ -116,7 +116,13 @@ export const ICON_COMPONENTS = {
 	'hand-point': HandPointIcon,
 };
 
+export function getIconType( iconType ) {
+	return Object.prototype.hasOwnProperty.call( ICON_COMPONENTS, iconType )
+		? iconType
+		: 'mouse';
+}
+
 export function IconRenderer( { iconType } ) {
-	const Component = ICON_COMPONENTS[ iconType ] || MouseIcon;
+	const Component = ICON_COMPONENTS[ getIconType( iconType ) ];
 	return <Component />;
 }

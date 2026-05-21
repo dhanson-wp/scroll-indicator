@@ -1,4 +1,6 @@
-.scroll-indicator-icon-picker {
+.scroll-indicator-icon-picker,
+.scroll-indicator-size-picker,
+.scroll-indicator-position-picker {
 	border: 0;
 	padding: 0;
 	margin: 0 0 16px;
@@ -29,18 +31,67 @@
 	}
 }
 
-.scroll-indicator-size-picker {
-	border: 0;
-	padding: 0;
-	margin: 0;
+.scroll-indicator-icon-preview {
+	align-items: center;
+	display: inline-flex;
+	height: 20px;
+	justify-content: center;
+	width: 20px;
 
-	legend {
-		font-weight: 500;
-		margin-bottom: 8px;
+	&.icon-mouse,
+	&.icon-arrow-down,
+	&.icon-chevron-bounce,
+	&.icon-hand-point {
+
+		svg,
+		path,
+		rect,
+		line {
+			fill: none;
+		}
 	}
 }
 
-.scroll-indicator-size-buttons {
-	display: flex;
+.scroll-indicator-mode-buttons {
+	display: grid;
+	gap: 4px;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
 	margin-bottom: 12px;
+}
+
+.scroll-indicator-position-buttons {
+	display: flex;
+	gap: 4px;
+
+	.components-button {
+		justify-content: center;
+		min-width: 44px;
+	}
+}
+
+.scroll-indicator-absolute-controls,
+.scroll-indicator-position-note {
+	color: #1e1e1e;
+	font-size: 12px;
+	line-height: 1.4;
+	margin: 0 0 12px;
+}
+
+.scroll-indicator-control-icon {
+	display: inline-flex;
+	height: 18px;
+	margin-right: 6px;
+	vertical-align: middle;
+	width: 18px;
+}
+
+.editor-styles-wrapper {
+
+	.wp-block-scroll-indicator-scroll-indicator.is-position-absolute {
+		cursor: grab;
+
+		&:active {
+			cursor: grabbing;
+		}
+	}
 }

@@ -1,42 +1,65 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import { IconRenderer, getSizeValue } from './icons';
+import { IconRenderer, getIconType, getSizeValue } from './icons';
+import {
+	getPositionClassNames,
+	getPositionStyle,
+	getFlowAlignment,
+	getScreenPosition,
+	getScreenPositionFromAlignment,
+	getAlignmentClassName,
+} from './position';
 
 export default function save( { attributes } ) {
 	const {
 		iconType = 'mouse',
 		iconSize = 'M',
 		customSizeValue = '24px',
-		hideAfterScrolling = false,
+		align,
 		showText = true,
 		customText = 'Scroll down',
+		positionMode = 'flow',
+		screenPosition = 'bottom-center',
+		absoluteX = 50,
+		absoluteY = 85,
+		flowAlign = 'center',
 	} = attributes;
 
+	const normalizedIconType = getIconType( iconType );
 	const sizeValue = getSizeValue( iconSize, customSizeValue );
+	const label = customText || 'Scroll down';
+	const hasCoreAlignment = [ 'left', 'center', 'right' ].includes( align );
+	const normalizedScreenPosition = hasCoreAlignment
+		? getScreenPositionFromAlignment( align )
+		: getScreenPosition( screenPosition );
+	const normalizedFlowAlign = getFlowAlignment(
+		hasCoreAlignment ? align : flowAlign
+	);
 
 	const blockProps = useBlockProps.save( {
+		className: getPositionClassNames(
+			positionMode,
+			normalizedScreenPosition,
+			normalizedFlowAlign
+		)
+			.concat( ' ', getAlignmentClassName( align ) )
+			.trim(),
 		style: {
 			'--scroll-indicator-size': sizeValue,
+			...getPositionStyle( positionMode, absoluteX, absoluteY ),
 		},
 	} );
 
 	return (
 		<div { ...blockProps }>
-			<div
-				className={ `scroll-indicator icon-${ iconType }` }
-				role="button"
-				tabIndex="0"
-				aria-label={ customText || 'Scroll down' }
-				data-hide-after-scrolling={
-					hideAfterScrolling ? 'true' : 'false'
-				}
+			<button
+				type="button"
+				className={ `scroll-indicator icon-${ normalizedIconType }` }
+				aria-label={ label }
+				data-hide-after-scrolling="true"
 			>
-				<IconRenderer iconType={ iconType } />
-				{ showText && (
-					<div className="scroll-text">
-						{ customText || 'Scroll down' }
-					</div>
-				) }
-			</div>
+				<IconRenderer iconType={ normalizedIconType } />
+				{ showText && <div className="scroll-text">{ label }</div> }
+			</button>
 		</div>
 	);
 }
