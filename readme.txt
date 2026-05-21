@@ -4,7 +4,7 @@ Tags: block, scroll, animation, indicator, gutenberg
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,12 @@ Yes. The front-end indicator is saved as a keyboard-focusable button-like contro
 The icon and optional text still render without JavaScript. JavaScript is only needed for click-to-scroll and automatic hide-on-scroll behavior.
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Prepare the plugin for WordPress.org submission with packaged compiled assets, cleaner repository hygiene, and improved editor positioning controls.
+* Improve accessibility with a real button element, reduced-motion-aware scrolling, and automatic hide-on-scroll behavior.
+* Add WordPress 7.0 testing metadata.
 
 = 1.0.0 =
 
