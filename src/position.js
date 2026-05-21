@@ -16,6 +16,18 @@ const FLOW_ALIGNMENT_MAP = {
 	right: 'right',
 };
 
+const ALIGNMENT_TO_SCREEN_POSITION = {
+	left: 'bottom-left',
+	center: 'bottom-center',
+	right: 'bottom-right',
+};
+
+const SCREEN_POSITION_TO_ALIGNMENT = {
+	'bottom-left': 'left',
+	'bottom-center': 'center',
+	'bottom-right': 'right',
+};
+
 export function getPositionMode( positionMode ) {
 	return POSITION_MODE_MAP[ positionMode ] || POSITION_MODE_MAP.flow;
 }
@@ -29,6 +41,20 @@ export function getScreenPosition( screenPosition ) {
 
 export function getFlowAlignment( flowAlign ) {
 	return FLOW_ALIGNMENT_MAP[ flowAlign ] || FLOW_ALIGNMENT_MAP.center;
+}
+
+export function getAlignmentFromScreenPosition( screenPosition ) {
+	return (
+		SCREEN_POSITION_TO_ALIGNMENT[ getScreenPosition( screenPosition ) ] ||
+		FLOW_ALIGNMENT_MAP.center
+	);
+}
+
+export function getScreenPositionFromAlignment( alignment ) {
+	return (
+		ALIGNMENT_TO_SCREEN_POSITION[ getFlowAlignment( alignment ) ] ||
+		SCREEN_POSITION_MAP[ 'bottom-center' ]
+	);
 }
 
 export function getAbsoluteCoordinate( coordinate, fallback ) {

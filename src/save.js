@@ -1,12 +1,19 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { IconRenderer, getIconType, getSizeValue } from './icons';
-import { getPositionClassNames, getPositionStyle } from './position';
+import {
+	getPositionClassNames,
+	getPositionStyle,
+	getFlowAlignment,
+	getScreenPosition,
+	getScreenPositionFromAlignment,
+} from './position';
 
 export default function save( { attributes } ) {
 	const {
 		iconType = 'mouse',
 		iconSize = 'M',
 		customSizeValue = '24px',
+		align,
 		showText = true,
 		customText = 'Scroll down',
 		positionMode = 'flow',
@@ -19,12 +26,19 @@ export default function save( { attributes } ) {
 	const normalizedIconType = getIconType( iconType );
 	const sizeValue = getSizeValue( iconSize, customSizeValue );
 	const label = customText || 'Scroll down';
+	const hasCoreAlignment = [ 'left', 'center', 'right' ].includes( align );
+	const normalizedScreenPosition = hasCoreAlignment
+		? getScreenPositionFromAlignment( align )
+		: getScreenPosition( screenPosition );
+	const normalizedFlowAlign = getFlowAlignment(
+		hasCoreAlignment ? align : flowAlign
+	);
 
 	const blockProps = useBlockProps.save( {
 		className: getPositionClassNames(
 			positionMode,
-			screenPosition,
-			flowAlign
+			normalizedScreenPosition,
+			normalizedFlowAlign
 		),
 		style: {
 			'--scroll-indicator-size': sizeValue,

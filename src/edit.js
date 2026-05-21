@@ -32,6 +32,8 @@ import {
 	getAbsoluteCoordinate,
 	getFlowAlignment,
 	getScreenPosition,
+	getAlignmentFromScreenPosition,
+	getScreenPositionFromAlignment,
 } from './position';
 
 const ICON_OPTIONS = [
@@ -50,7 +52,16 @@ const ICON_SIZE_OPTIONS = [
 	{ value: 'M', label: __( 'Medium', 'scroll-indicator' ), text: 'M' },
 	{ value: 'L', label: __( 'Large', 'scroll-indicator' ), text: 'L' },
 	{ value: 'XL', label: __( 'Extra Large', 'scroll-indicator' ), text: 'XL' },
+	{
+		value: 'custom',
+		label: __( 'Custom', 'scroll-indicator' ),
+		text: __( 'Custom', 'scroll-indicator' ),
+	},
 ];
+
+const CUSTOM_SIZE_MIN = 12;
+const CUSTOM_SIZE_MAX = 96;
+const CUSTOM_SIZE_DEFAULT = 24;
 
 const POSITION_MODE_OPTIONS = [
 	{ value: 'flow', label: __( 'Flow', 'scroll-indicator' ) },
@@ -99,12 +110,14 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		iconType = 'mouse',
 		iconSize = 'M',
 		customSizeValue = '24px',
+		align,
 		showText = true,
 		customText = 'Scroll down',
 		positionMode = 'flow',
 		screenPosition = 'bottom-center',
 		absoluteX = 50,
 		absoluteY = 85,
+		flowAlign = 'center',
 	} = attributes;
 
 	const blockRef = useRef();
@@ -112,10 +125,42 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	const normalizedIconType = getIconType( iconType );
 	const sizeValue = getSizeValue( iconSize, customSizeValue );
 	const normalizedPositionMode = getPositionMode( positionMode );
-	const normalizedScreenPosition = getScreenPosition( screenPosition );
+	const hasCoreAlignment = [ 'left', 'center', 'right' ].includes( align );
+	const normalizedScreenPosition = hasCoreAlignment
+		? getScreenPositionFromAlignment( align )
+		: getScreenPosition( screenPosition );
 	const normalizedAbsoluteX = getAbsoluteCoordinate( absoluteX, 50 );
 	const normalizedAbsoluteY = getAbsoluteCoordinate( absoluteY, 85 );
-	const normalizedFlowAlign = getFlowAlignment( attributes.flowAlign );
+	const normalizedFlowAlign = getFlowAlignment(
+		hasCoreAlignment ? align : flowAlign
+	);
+	const customSizeNumber = getCustomSizeNumber( customSizeValue );
+
+	function getCustomSizeNumber( value ) {
+		const numericValue =
+			typeof value === 'number' ? value : Number.parseFloat( value );
+
+		if ( ! Number.isFinite( numericValue ) ) {
+			return CUSTOM_SIZE_DEFAULT;
+		}
+
+		return Math.min(
+			CUSTOM_SIZE_MAX,
+			Math.max( CUSTOM_SIZE_MIN, numericValue )
+		);
+	}
+
+	function setIconSize( nextIconSize ) {
+		const nextAttributes = {
+			iconSize: nextIconSize,
+		};
+
+		if ( nextIconSize === 'custom' ) {
+			nextAttributes.customSizeValue = `${ customSizeNumber }px`;
+		}
+
+		setAttributes( nextAttributes );
+	}
 
 	function updateAbsolutePosition( event ) {
 		const wrapper = blockRef.current;
@@ -239,15 +284,35 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 									label={ option.label }
 									showTooltip
 									onClick={ () =>
-										setAttributes( {
-											iconSize: option.value,
-										} )
+										setIconSize( option.value )
 									}
 								>
 									{ option.text }
 								</Button>
 							) ) }
 						</ButtonGroup>
+						{ iconSize === 'custom' && (
+							<RangeControl
+								label={ __(
+									'Custom size',
+									'scroll-indicator'
+								) }
+								value={ customSizeNumber }
+								min={ CUSTOM_SIZE_MIN }
+								max={ CUSTOM_SIZE_MAX }
+								step={ 1 }
+								renderTooltipContent={ ( value ) =>
+									`${ value }px`
+								}
+								onChange={ ( value ) =>
+									setAttributes( {
+										customSizeValue: `${
+											value || CUSTOM_SIZE_DEFAULT
+										}px`,
+									} )
+								}
+							/>
+						) }
 					</fieldset>
 					<ToggleControl
 						label={ __( 'Show text', 'scroll-indicator' ) }
@@ -319,6 +384,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 											onClick={ () =>
 												setAttributes( {
 													flowAlign: option.value,
+													align: option.value,
 												} )
 											}
 										/>
@@ -350,6 +416,9 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 												setAttributes( {
 													screenPosition:
 														option.value,
+													align: getAlignmentFromScreenPosition(
+														option.value
+													),
 												} )
 											}
 										/>
