@@ -11,13 +11,6 @@
 	}
 }
 
-.scroll-indicator-size-picker {
-
-	.components-font-size-picker > :first-child {
-		display: none;
-	}
-}
-
 .scroll-indicator-icon-buttons {
 	display: flex;
 	flex-wrap: wrap;
@@ -94,11 +87,11 @@
 
 .editor-styles-wrapper {
 
-	.wp-block-cover:has(.wp-block-scroll-indicator-scroll-indicator.is-position-fixed) {
-		position: relative;
-	}
+	.wp-block-scroll-indicator-scroll-indicator.is-position-absolute {
+		cursor: grab;
 
-	.wp-block-cover .wp-block-scroll-indicator-scroll-indicator.is-position-fixed {
-		position: absolute;
+		&:active {
+			cursor: grabbing;
+		}
 	}
 }

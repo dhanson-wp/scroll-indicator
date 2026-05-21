@@ -1,9 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import {
-	useBlockProps,
-	InspectorControls,
-	FontSizePicker,
-} from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
 import {
 	desktop,
@@ -50,14 +46,10 @@ const ICON_OPTIONS = [
 ];
 
 const ICON_SIZE_OPTIONS = [
-	{ name: __( 'Small', 'scroll-indicator' ), slug: 'small', size: '18px' },
-	{ name: __( 'Medium', 'scroll-indicator' ), slug: 'medium', size: '24px' },
-	{ name: __( 'Large', 'scroll-indicator' ), slug: 'large', size: '32px' },
-	{
-		name: __( 'Extra Large', 'scroll-indicator' ),
-		slug: 'extra-large',
-		size: '48px',
-	},
+	{ value: 'S', label: __( 'Small', 'scroll-indicator' ), text: 'S' },
+	{ value: 'M', label: __( 'Medium', 'scroll-indicator' ), text: 'M' },
+	{ value: 'L', label: __( 'Large', 'scroll-indicator' ), text: 'L' },
+	{ value: 'XL', label: __( 'Extra Large', 'scroll-indicator' ), text: 'XL' },
 ];
 
 const POSITION_MODE_OPTIONS = [
@@ -239,19 +231,45 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 						<legend>
 							{ __( 'Icon Size', 'scroll-indicator' ) }
 						</legend>
-						<FontSizePicker
-							fontSizes={ ICON_SIZE_OPTIONS }
-							value={ sizeValue }
-							onChange={ ( value ) =>
-								setAttributes( {
-									iconSize: 'custom',
-									customSizeValue: value || '24px',
-								} )
-							}
-							headingLevel={ 3 }
-							withSlider={ false }
-						/>
+						<ButtonGroup className="scroll-indicator-size-buttons">
+							{ ICON_SIZE_OPTIONS.map( ( option ) => (
+								<Button
+									key={ option.value }
+									isPressed={ iconSize === option.value }
+									label={ option.label }
+									showTooltip
+									onClick={ () =>
+										setAttributes( {
+											iconSize: option.value,
+										} )
+									}
+								>
+									{ option.text }
+								</Button>
+							) ) }
+						</ButtonGroup>
 					</fieldset>
+					<ToggleControl
+						label={ __( 'Show text', 'scroll-indicator' ) }
+						checked={ showText }
+						onChange={ ( value ) =>
+							setAttributes( { showText: value } )
+						}
+					/>
+					{ showText && (
+						<TextControl
+							__next40pxDefaultSize
+							label={ __( 'Text', 'scroll-indicator' ) }
+							value={ customText }
+							onChange={ ( value ) =>
+								setAttributes( { customText: value } )
+							}
+							placeholder={ __(
+								'Scroll down',
+								'scroll-indicator'
+							) }
+						/>
+					) }
 				</PanelBody>
 				<PanelBody
 					title={ __( 'Position', 'scroll-indicator' ) }
@@ -381,31 +399,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 								'scroll-indicator'
 							) }
 						</p>
-					) }
-				</PanelBody>
-				<PanelBody
-					title={ __( 'Text', 'scroll-indicator' ) }
-					initialOpen={ false }
-				>
-					<ToggleControl
-						label={ __( 'Show text', 'scroll-indicator' ) }
-						checked={ showText }
-						onChange={ ( value ) =>
-							setAttributes( { showText: value } )
-						}
-					/>
-					{ showText && (
-						<TextControl
-							label={ __( 'Custom Text', 'scroll-indicator' ) }
-							value={ customText }
-							onChange={ ( value ) =>
-								setAttributes( { customText: value } )
-							}
-							placeholder={ __(
-								'Scroll down',
-								'scroll-indicator'
-							) }
-						/>
 					) }
 				</PanelBody>
 			</InspectorControls>
