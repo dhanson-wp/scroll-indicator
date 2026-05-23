@@ -11,7 +11,7 @@
         "lint:css": "wp-scripts lint-style \"src/**/*.scss\"",
         "lint:js": "wp-scripts lint-js \"src/**/*.js\"",
         "packages-update": "wp-scripts packages-update",
-        "plugin-zip": "npx pressship pack . --no-validate",
+        "plugin-zip": "npx pressship pack .",
         "start": "wp-scripts start --blocks-manifest --output-path=compiled"
     },
     "devDependencies": {

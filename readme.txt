@@ -1,5 +1,5 @@
 === Scroll Indicator ===
-Contributors: derekhanson
+Contributors: dhansondesigns
 Tags: block, scroll, animation, indicator, gutenberg
 Requires at least: 6.4
 Tested up to: 7.0
@@ -32,7 +32,14 @@ The block is intentionally lightweight. Animations are handled with CSS, respect
 
 = Development =
 
-Source code and build tooling are maintained at https://github.com/dhanson-wp/scroll-indicator.
+The human-readable source for the compiled JavaScript and CSS is included in this plugin package under `src/`.
+
+The generated files in `compiled/` are built from `src/index.js`, `src/view.js`, and the SCSS files in `src/` using `@wordpress/scripts`. To rebuild them, run:
+
+1. `npm install`
+2. `npm run build`
+
+The public source repository is maintained at https://github.com/dhanson-wp/scroll-indicator.
 
 = Good For =
 
@@ -75,6 +82,8 @@ The icon and optional text still render without JavaScript. JavaScript is only n
 
 = 1.0.1 =
 
+* Add the WordPress.org owner username to the contributors list.
+* Include and document the human-readable source for compiled JavaScript and CSS.
 * Prepare the plugin for WordPress.org submission with packaged compiled assets, cleaner repository hygiene, and improved editor positioning controls.
 * Improve accessibility with a real button element, reduced-motion-aware scrolling, and automatic hide-on-scroll behavior.
 * Add WordPress 7.0 testing metadata.

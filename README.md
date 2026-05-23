@@ -27,6 +27,9 @@ Site builders can choose an icon style, tune the size and color, add optional te
 
 ## Development
 
+The human-readable source for the compiled JavaScript and CSS is in `src/`.
+Production assets in `compiled/` are generated with `@wordpress/scripts`.
+
 Install dependencies:
 
 ```bash
