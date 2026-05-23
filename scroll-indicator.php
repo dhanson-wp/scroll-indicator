@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'scroll_indicator_init' ) ) {
+	/**
+	 * Registers the Scroll Indicator block.
+	 */
 	function scroll_indicator_init() {
 		register_block_type( __DIR__ . '/compiled/' );
 	}
